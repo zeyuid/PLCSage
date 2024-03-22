@@ -13,11 +13,11 @@ python ./data_segmentation/segmenting_utils.py
 
 ## Attack detection in SCADA
 
-python customized_SCADA.py
+python ./customized_SCADA.py
 
 
 ## Mount stealthy attack 
 
-python stealthy_attack.py
+python ./stealthy_attack.py
 
 
