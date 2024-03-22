@@ -9,7 +9,6 @@ from utils import *
 
 from scipy.io import savemat
 import scipy.stats
-from plot_motivating_heatmap_SCADA_PIIO import correlation_heatmap_analysis
 
 
 
@@ -372,7 +371,7 @@ def cyclic_procedures(PII_values, PIO_values, SCADA_values, alpha, threshold_bet
     
     # for the LSB0 entropy series
     filename_LE = "comm_wincc_snap_20211116_MSB0_0.mat"
-    # filename_LE = "comm_wincc_snap_20211223_MSB0_0.mat"
+    
     
     data = loadmat("./comm-Yang/" + filename_LE)
     H_PII = data["I_1"]
@@ -412,9 +411,7 @@ def cyclic_procedures(PII_values, PIO_values, SCADA_values, alpha, threshold_bet
     PIIO_value_LE = np.concatenate([PII_tranlated_value_LE, PIO_tranlated_value_LE], axis=1)
     max_max_coor_LE, correlations_LE = signals_correlation(PIIO_value_LE, SCADA_tranlated_value_LE)
 
-    # # show the correlation heatmap
-    # PIIO_address_LE = PII_memory_address_LE + PIO_memory_address_LE
-    # correlation_heatmap_analysis(correlations_LE, tuple(SCADA_memory_address_LE), tuple(PIIO_address_LE))
+    
 
     precision_LE, recall_LE = performence_analysis(PII_memory_address_LE_pure, PIO_memory_address_LE_pure, SCADA_memory_address_LE_pure)
 
@@ -443,10 +440,6 @@ if __name__ == '__main__':
     PLChexs_Q = pickle.load(open(storepath + "comm_wincc_snap_20211116_SnapQ_hex_MSB0_1.pickle", "rb"))
     PLChexs_SCADA = pickle.load(open(storepath + "comm_wincc_snap_20211116_SCADA_hex_MSB0_1.pickle", "rb"))
 
-    # PLChexs_I = pickle.load(open(storepath + "comm_wincc_snap_20211223_SnapI_hex_MSB0_1.pickle", "rb"))
-    # PLChexs_Q = pickle.load(open(storepath + "comm_wincc_snap_20211223_SnapQ_hex_MSB0_1.pickle", "rb"))
-    # PLChexs_SCADA = pickle.load(open(storepath + "comm_wincc_snap_20211223_SCADA_hex_MSB0_1.pickle", "rb"))
-
 
     # concatenate items in network traffic
     PII_values = items_concatenation(PLChexs_I)
@@ -455,15 +448,16 @@ if __name__ == '__main__':
 
 
     # the larger alpha, the higher recall
-    alpha_list = [ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-    # alpha_list = [0.3]
     # all alpha_list < 1, is because the entropy of the least bit of a signal is smaller than 1
+    alpha_list = [ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+    # alpha_list = [0.3] # the parameter that achieve 100% precision and 100% recall
+    
     
     # the smaller beta, the higher recall (TP/PP)
-    # beta_list = [-0.1, -0.2, -0.3, -0.4, -0.5, -0.6, -0.7, -0.8, -0.9]
-    beta_list = [-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1]
-    # beta_list = [-0.7]
     # all beta_list < 0, is because of the measurement system noise
+    beta_list = [-0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1]
+    # beta_list = [-0.7] # the parameter that achieve 100% precision and 100% recall
+    
     
 
 
@@ -501,8 +495,8 @@ if __name__ == '__main__':
             Recall_Matrix[i, j] = recall
         print("wait")
 
-    correlation_heatmap_analysis(Precision_Matrix, tuple(alpha_list), tuple(beta_list), saving_name="/Users/magnolia/Library/CloudStorage/Dropbox/Zeyu/PLCSage/figures/M_Sig_Iden_Precision", xlabel_name="beta", ylabel_name="alpha")
-    correlation_heatmap_analysis(Recall_Matrix, tuple(alpha_list), tuple(beta_list), saving_name="/Users/magnolia/Library/CloudStorage/Dropbox/Zeyu/PLCSage/figures/M_Sig_Iden_Recall", xlabel_name="beta", ylabel_name="alpha")
+    # correlation_heatmap_analysis(Precision_Matrix, tuple(alpha_list), tuple(beta_list), saving_name="/Users/magnolia/Library/CloudStorage/Dropbox/Zeyu/PLCSage/figures/M_Sig_Iden_Precision", xlabel_name="beta", ylabel_name="alpha")
+    # correlation_heatmap_analysis(Recall_Matrix, tuple(alpha_list), tuple(beta_list), saving_name="/Users/magnolia/Library/CloudStorage/Dropbox/Zeyu/PLCSage/figures/M_Sig_Iden_Recall", xlabel_name="beta", ylabel_name="alpha")
     print("analysis of signals segmentation is finished!")
 
     identification_accurate = {}
@@ -510,7 +504,3 @@ if __name__ == '__main__':
     identification_accurate["Recall_Matrix"] = Recall_Matrix
     identification_accurate["alpha_list"] = np.array(alpha_list)
     identification_accurate["beta_list"] = np.array(beta_list)
-
-    # savemat(storepath + "comm_wincc_snap_20211116" + "idenfy_results.mat", identification_accurate)
-
-    
