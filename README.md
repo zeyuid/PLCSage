@@ -20,4 +20,4 @@ python ./customized_SCADA.py
 
 python ./stealthy_attack.py
 
-
+The exploitation of "Force" function for Siemens PLC and Rockwell PLC is coming soon!
