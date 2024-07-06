@@ -21,3 +21,18 @@ python ./customized_SCADA.py
 python ./stealthy_attack.py
 
 The exploitation of "Force" function for Siemens PLC and Rockwell PLC is coming soon!
+
+
+## Cite
+If you use PLCSage for your research, please cite [Mismatched Control and Monitoring Frequencies: Vulnerability, Attack, and Mitigation](https://ieeexplore.ieee.org/document/10495752).
+
+```
+bibtex
+@article{yang2024mismatched,
+  title={Mismatched Control and Monitoring Frequencies: Vulnerability, Attack, and Mitigation},
+  author={Yang, Zeyu and He, Liang and Cheng, Peng and Chen, Jiming},
+  journal={IEEE Transactions on Dependable and Secure Computing},
+  year={2024},
+  publisher={IEEE}
+}
+```
